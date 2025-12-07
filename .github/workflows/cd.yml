@@ -24,11 +24,6 @@ jobs:
             git pull origin main
             pnpm install
             pnpm run build
-            cd apps/web
-            pm2 start npm --name "fe" -- start
-            cd ..
-            cd http-server
-            pm2 start npm --name "http-server" -- start
-            cd ..
-            cd ws-server
-            pm2 start npm --name "ws-server" -- start
+            pm2 stop all
+            pm2 restart all
+            
