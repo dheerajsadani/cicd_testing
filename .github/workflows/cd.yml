@@ -17,4 +17,15 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
-            ls
+            cd cicd_testing
+            git pull origin main
+            pnpm run build
+            pm2 delete all
+            cd apps/web
+            pm2 start npm --name "fe" -- start
+            cd ..
+            cd http-server
+            pm2 start npm --name "http-server" -- start
+            cd ..
+            cd ws-server
+            pm2 start npm --name "ws-server" -- start
